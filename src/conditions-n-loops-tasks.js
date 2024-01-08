@@ -268,18 +268,23 @@ function isContainNumber(num, digit) {
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
 function getBalanceIndex(arr) {
-  let index = -1;
-  for (let i = 0; i < arr.length; i += 1) {
-    if (arr.length < 5 && arr[i] + arr[i + 1] === arr[i + 3]) {
-      index = i + 2;
+  const len = arr.length;
+  for (let i = 0; i < len; i += 1) {
+    let leftSum = 0;
+    let rightSum = 0;
+    for (let j = 0; j < i; j += 1) {
+      leftSum += arr[j];
     }
-    if (arr.length > 4 && arr[i] + arr[i + 1] === arr[i + 3] + arr[i + 4]) {
-      index = i + 2;
+    for (let k = i + 1; k < len; k += 1) {
+      rightSum += arr[k];
+    }
+    if (leftSum === rightSum) {
+      return i;
     }
   }
-  return index;
+  return -1;
 }
-// console.log('getBalanceIndex', getBalanceIndex([1, 2, 3, 4, 5, 6, 7, 8, 9]));
+console.log('getBalanceIndex', getBalanceIndex([5, 9, 2, 3]));
 /**
  * Generates a spiral matrix of a given size, filled with numbers in ascending order starting from one.
  * The direction of filling with numbers is clockwise.
@@ -301,18 +306,19 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(size) {
-  const totalCount = size * size;
-  const res = [];
-  let arr = [];
-  for (let j = 1; j <= totalCount + 1; j += 1) {
-    if (arr.length === size) {
-      res.push(arr);
-      arr = [];
-    }
-    arr.push(j);
-  }
-  return res;
+function getSpiralMatrix(/* size */) {
+  throw new Error('Not implemented');
+  // const totalCount = size * size;
+  // const res = [];
+  // let arr = [];
+  // for (let j = 1; j <= totalCount + 1; j += 1) {
+  //   if (arr.length === size) {
+  //     res.push(arr);
+  //     arr = [];
+  //   }
+  //   arr.push(j);
+  // }
+  // return res;
 }
 // console.log('getSpiralMatrix', getSpiralMatrix(3));
 /**
@@ -331,34 +337,26 @@ function getSpiralMatrix(size) {
  *  ]                 ]
  */
 function rotateMatrix(matrix) {
-  const eee = matrix;
+  const reMatrix = matrix;
   const res = [];
   const size = matrix[0].length;
   let arr = [];
   for (let j = 0; j <= size; j += 1) {
-    for (let i = 0; i < matrix.length; i += 1) {
+    for (let i = size - 1; i >= 0; i -= 1) {
       if (arr.length === size) {
         res[j - 1] = arr;
         arr = [];
       }
-      arr.unshift(matrix[i][j]);
+      arr[size - 1 - i] = matrix[i][j];
     }
   }
   for (let i = 0; i < size; i += 1) {
     for (let j = 0; j < size; j += 1) {
-      eee[i][j] = res[i][j];
+      reMatrix[i][j] = res[i][j];
     }
   }
-  return eee;
+  return reMatrix;
 }
-console.log(
-  'rotateMatrix',
-  rotateMatrix([
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ])
-);
 
 /**
  * Sorts an array of numbers in ascending order in place.
