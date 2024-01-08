@@ -284,7 +284,6 @@ function getBalanceIndex(arr) {
   }
   return -1;
 }
-console.log('getBalanceIndex', getBalanceIndex([5, 9, 2, 3]));
 /**
  * Generates a spiral matrix of a given size, filled with numbers in ascending order starting from one.
  * The direction of filling with numbers is clockwise.
