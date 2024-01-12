@@ -372,24 +372,55 @@ function rotateMatrix(matrix) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 function sortByAsc(arr) {
-  const recFunky = (array) => {
-    const reArray = array;
-    for (let i = 0; i < array.length; i += 1) {
-      if (array[i + 1] < array[i]) {
-        [reArray[i], reArray[i + 1]] = [reArray[i + 1], reArray[i]];
-        break;
+  // const recFunky = (array) => {
+  //   const reArray = array;
+  //   for (let i = 0; i < array.length; i += 1) {
+  //     if (array[i + 1] < array[i]) {
+  //       [reArray[i], reArray[i + 1]] = [reArray[i + 1], reArray[i]];
+  //       break;
+  //     }
+  //   }
+  //   for (let i = 0; i < reArray.length; i += 1) {
+  //     if (reArray[i + 1] < reArray[i]) {
+  //       return recFunky(reArray);
+  //     }
+  //   }
+  //   return reArray;
+  // };
+  // return recFunky(arr);
+  const reArray = arr;
+  for (let i = 0; i < arr.length; i += 1) {
+    let value = arr[i];
+    let position = i;
+    for (let j = i + 1; j < arr.length; j += 1) {
+      if (arr[j] < value) {
+        position += 1;
       }
     }
-    for (let i = 0; i < reArray.length; i += 1) {
-      if (reArray[i + 1] < reArray[i]) {
-        return recFunky(reArray);
-      }
+    if (position === i) {
+      continue;
     }
-    return reArray;
-  };
-  return recFunky(arr);
+    while (value === arr[position]) {
+      position += 1;
+    }
+    [reArray[position], value] = [value, arr[position]];
+    while (position !== i) {
+      position = i;
+      for (let k = i + 1; k < arr.length; k += 1) {
+        if (arr[k] < value) {
+          position += 1;
+        }
+      }
+      while (value === arr[position]) {
+        position += 1;
+      }
+      [reArray[position], value] = [value, arr[position]];
+    }
+  }
+  return reArray;
 }
 
+console.log(sortByAsc([-2, 9, 5, -3]));
 /**
  * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
  * Take into account that the string can be very long and the number of iterations is large. Consider how you can optimize your solution.
